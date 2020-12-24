@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include autoram_addons *.css
+recursive-include autoram_addons *.csv
+recursive-include autoram_addons *.html
+recursive-include autoram_addons *.ico
+recursive-include autoram_addons *.js
+recursive-include autoram_addons *.json
+recursive-include autoram_addons *.md
+recursive-include autoram_addons *.png
+recursive-include autoram_addons *.py
+recursive-include autoram_addons *.svg
+recursive-include autoram_addons *.txt
+recursive-exclude autoram_addons *.pyc
