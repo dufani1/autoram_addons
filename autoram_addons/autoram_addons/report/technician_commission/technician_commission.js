@@ -33,6 +33,24 @@ frappe.query_reports["Technician Commission"] = {
 			fieldtype: "Date",
 		},
 		{
+			fieldname:"sales_invoice",
+			label: __("Sales Invoice"),
+			fieldtype: "Link",
+			options: "Sales Invoice"
+		},
+		{
+			fieldname:"item",
+			label: __("Item"),
+			fieldtype: "Link",
+			options: "Item"
+		},
+		{
+			fieldname:"item_group",
+			label: __("Item Group"),
+			fieldtype: "Link",
+			options: "Item Group"
+		},
+		{
 			fieldname:"currency",
 			default: frappe.defaults.get_default("currency"),
 			label: __("Currency"),

@@ -33,7 +33,7 @@ def get_columns(filters):
 			"label": _("Currency"),
 			"fieldtype": "Link",
 			"options": "Currency",
-			"width": "64"
+			"width": "80"
 		},
 		{
 			"fieldname": "item_name",
@@ -41,6 +41,13 @@ def get_columns(filters):
 			"fieldtype": "Link",
 			"options": "Item",
 			"width": "180"
+		},
+		{
+			"fieldname": "item_group",
+			"label": _("Item Group"),
+			"fieldtype": "Link",
+			"options": "Item Group",
+			"width": "90"
 		},
 		{
 			"fieldname": "item_uom",
@@ -59,7 +66,7 @@ def get_columns(filters):
 			"fieldname": "amount",
 			"label": _("Amount"),
 			"fieldtype": "Currency",
-			"width": "150"
+			"width": "110"
 		},
 		{
 			"fieldname": "commission",
@@ -85,6 +92,9 @@ def get_data(filters):
 	if(filters.get("from_date")):
 		filters_dict["posting_date"] = [">=", filters.get("from_date"), "<=", filters.get("to_date")]
 
+	if(filters.get("sales_invoice")):
+		filters_dict["name"] = filters.get("sales_invoice")
+
 	if(filters.get("currency")):
 		filters_dict["currency"] = filters.get("currency")
 
@@ -95,13 +105,16 @@ def get_data(filters):
 		si_orm = frappe.get_doc("Sales Invoice", si_list[idx].name)
 
 		for item in si_orm.items:
-			if item.technician != filters.technician:
+			if item.technician != filters.technician \
+				or (filters.item and filters.item != item.item_code) \
+				or (filters.item_group and filters.item_group != item.item_group):
 				continue
 			tmp_row = {
 				"technician_name": item.technician_name,
 				"invoice_name": si_orm.name,
 				"invoice_currency": si_list[idx].currency,
 				"item_name": item.item_name,
+				"item_group": item.item_group,
 				"item_uom": item.uom,
 				"item_qty": frappe.utils.flt(item.qty),
 				"amount": item.amount,
@@ -109,7 +122,7 @@ def get_data(filters):
 				"commission_rate": frappe.format_value(item.technician_commission_rate, "Currency")
 			}
 			data.append(tmp_row)
-			
+		
 		idx+=1
 
 	return data
