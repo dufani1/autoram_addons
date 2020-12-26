@@ -36,7 +36,14 @@ frappe.query_reports["Technician Commission"] = {
 			fieldname:"sales_invoice",
 			label: __("Sales Invoice"),
 			fieldtype: "Link",
-			options: "Sales Invoice"
+			options: "Sales Invoice",
+			get_query: function () {
+				return {
+					filters: {
+						"docstatus": "1"
+					}
+				}
+			}
 		},
 		{
 			fieldname:"item",
@@ -57,5 +64,16 @@ frappe.query_reports["Technician Commission"] = {
 			fieldtype: "Link",
 			options: "Currency"
 		},
-	]
+	],
+	after_datatable_render: function(datatable_obj) {
+		rows = datatable_obj.getRows();
+		if(rows && rows.length > 0 ) {
+			last_row = rows[rows.length -1]
+			console.log(last_row, datatable_obj)
+			last_row[1].content = "<b>Total</b>";
+			last_row[9].content = "<b>" + last_row[9].content + "</b>";
+			last_row[11].content = "<b>" + last_row[11].content + "</b>";
+			datatable_obj.refreshRow(last_row);
+		}
+	},
 };

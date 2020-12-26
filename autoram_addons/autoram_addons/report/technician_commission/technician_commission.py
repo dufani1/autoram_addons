@@ -75,24 +75,28 @@ def get_columns(filters):
 			"width": "110"
 		},
 		{
+			"fieldname": "commission_rate",
+			"label": _("Commission Rate"),
+			"fieldtype": "Float",
+			"width": "120"
+		},
+		{
 			"fieldname": "commission",
 			"label": _("Commission Amount"),
 			"fieldtype": "Currency",
 			"width": "145"
-		},
-		{
-			"fieldname": "commission_rate",
-			"label": _("Commission Rate"),
-			"fieldtype": "Currency",
-			"width": "120"
 		}
+
 	]
 
 def get_data(filters):
 	tmp_row = {}
-	idx = 0
-	filters_dict = {"docstatus": "1"}
 	data = []
+	idx = 0
+	total_commission = 0
+	total_amount = 0
+	filters_dict = {"docstatus": "1"}
+
 	si_orm = None
 
 	if(filters.get("from_date")):
@@ -126,10 +130,20 @@ def get_data(filters):
 				"item_qty": frappe.utils.flt(item.qty),
 				"amount": item.amount,
 				"commission": frappe.format_value(item.technician_commission_amount, "Currency"),
-				"commission_rate": frappe.format_value(item.technician_commission_rate, "Currency")
+				"commission_rate": frappe.utils.flt(item.technician_commission_rate, 2)
 			}
 			data.append(tmp_row)
+			total_amount += item.amount
+			total_commission = item.technician_commission_amount
 		
 		idx+=1
 
+	# calculate totals
+	if (len(data) >= 1):
+		totals = {
+				"technician_name": "Total",
+				"amount": frappe.format_value(total_amount, "Currency"),
+				"commission": frappe.format_value(total_commission, "Currency"),
+		}
+		data.append(totals)
 	return data
