@@ -29,6 +29,12 @@ def get_columns(filters):
 			"width": "144"
 		},
 		{
+			"fieldname": "invoice_status",
+			"label": _("Status"),
+			"fieldtype": "Data",
+			"width": "70"
+		},
+		{
 			"fieldname": "invoice_currency",
 			"label": _("Currency"),
 			"fieldtype": "Link",
@@ -72,7 +78,7 @@ def get_columns(filters):
 			"fieldname": "commission",
 			"label": _("Commission Amount"),
 			"fieldtype": "Currency",
-			"width": "135"
+			"width": "145"
 		},
 		{
 			"fieldname": "commission_rate",
@@ -85,7 +91,7 @@ def get_columns(filters):
 def get_data(filters):
 	tmp_row = {}
 	idx = 0
-	filters_dict = {}
+	filters_dict = {"docstatus": "1"}
 	data = []
 	si_orm = None
 
@@ -112,6 +118,7 @@ def get_data(filters):
 			tmp_row = {
 				"technician_name": item.technician_name,
 				"invoice_name": si_orm.name,
+				"invoice_status": si_orm.status,
 				"invoice_currency": si_list[idx].currency,
 				"item_name": item.item_name,
 				"item_group": item.item_group,
