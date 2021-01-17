@@ -1,21 +1,21 @@
 frappe.listview_settings['Item'] = {
 	add_fields: ["item_name", "stock_uom", "item_group", "image", "variant_of",
 		"has_variants", "end_of_life", "disabled"],
-	filters: [["disabled", "=", "0"]],
+	// filters: [["disabled", "=", "0"]],
     onload: function(lv, t){
         var cbtn = document.createElement("button");
         cbtn.className = "btn btn-default btn-xs filter-add-button text-muted d-clear-filters";
-        cbtn.innerHTML = "Add Vehicle Filters";
+        cbtn.innerHTML = frappe._("Add Vehicle Filters");
         cbtn.style.marginBottom = "10px";
         // cbtn.style.float = "right";
 
         cbtn.addEventListener("click", function(e) {
 
             let d = new frappe.ui.Dialog({
-            title: 'Enter details',
+            title: frappe._('Vehicles Filter'),
             fields: [
                 {
-                    label: 'Vehicle Make',
+                    label: frappe._('Vehicle Make'),
                     fieldname: 'vehicle_manufacturers',
                     fieldtype: 'Link',
                     options: "Vehicle Manufacturers",                },
@@ -25,7 +25,7 @@ frappe.listview_settings['Item'] = {
                     fieldtype: 'Column Break',
                 },
                 {
-                    label: 'Vehicle Model',
+                    label: frappe._('Vehicle Model'),
                     fieldname: 'vehicle_model',
                     fieldtype: 'Link',
                     options: "Vehicles Model"
@@ -36,7 +36,7 @@ frappe.listview_settings['Item'] = {
                     fieldtype: 'Column Break',
                 },
                 {
-                    label: 'Model Year',
+                    label: frappe._('Model Year'),
                     fieldname: 'model_year',
                     fieldtype: 'Link',
                     options: "Model Year"
@@ -47,16 +47,14 @@ frappe.listview_settings['Item'] = {
                     fieldtype: 'Column Break',
                 },
                 {
-                    label: 'Engine',
+                    label: frappe._('Engine'),
                     fieldname: 'vehicle_engine',
                     fieldtype: 'Link',
                     options: "Engine"
                 },
             ],
-            primary_action_label: 'Set Filters',
+            primary_action_label: frappe._('Set Filters'),
             primary_action(values) {
-                console.log(values, lv)
-                // cur_list.filter_area.filter_list.add_filters([["Compatible with", "vehicle_manufacturers", "=", values.vehicle_make]]);
                 cur_list.filter_area.filter_list.add_filter("Compatible with", "vehicle_manufacturers", "=", values.vehicle_manufacturers);
                 cur_list.filter_area.filter_list.add_filter("Compatible with", "vehicles_model", "=", values.vehicle_model);
                 cur_list.filter_area.filter_list.add_filter("Compatible with", "model_year", "=", values.model_year);
