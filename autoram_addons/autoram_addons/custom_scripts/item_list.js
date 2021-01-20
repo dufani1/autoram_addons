@@ -37,10 +37,8 @@ frappe.listview_settings['Item'] = {
                 },
                 {
                     label: frappe._('Model Year'),
-                    fieldname: 'model_year',
-                    fieldtype: 'Link',
-                    options: "Model Year"
-                },
+                    fieldname: 'year_model_v',
+                    fieldtype: 'Data'                },
                 {
                     
                     fieldname: 'column_break2',
@@ -57,7 +55,7 @@ frappe.listview_settings['Item'] = {
             primary_action(values) {
                 cur_list.filter_area.filter_list.add_filter("Compatible with", "vehicle_manufacturers", "=", values.vehicle_manufacturers);
                 cur_list.filter_area.filter_list.add_filter("Compatible with", "vehicles_model", "=", values.vehicle_model);
-                cur_list.filter_area.filter_list.add_filter("Compatible with", "model_year", "=", values.model_year);
+                cur_list.filter_area.filter_list.add_filter("Compatible with", "year_model_v", "like", values.year_model_v);
                 cur_list.filter_area.filter_list.add_filter("Compatible with", "engine", "=", values.vehicle_engine);
 
                 d.hide();
