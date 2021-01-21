@@ -47,8 +47,7 @@ frappe.listview_settings['Item'] = {
                 {
                     label: frappe._('Engine'),
                     fieldname: 'vehicle_engine',
-                    fieldtype: 'Link',
-                    options: "Engine"
+                    fieldtype: 'Data',
                 },
             ],
             primary_action_label: frappe._('Set Filters'),
