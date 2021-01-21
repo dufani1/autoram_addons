@@ -53,12 +53,23 @@ frappe.listview_settings['Item'] = {
             ],
             primary_action_label: frappe._('Set Filters'),
             primary_action(values) {
-                cur_list.filter_area.filter_list.add_filter("Compatible with", "vehicle_manufacturers", "=", values.vehicle_manufacturers);
-                cur_list.filter_area.filter_list.add_filter("Compatible with", "vehicles_model", "=", values.vehicle_model);
-                cur_list.filter_area.filter_list.add_filter("Compatible with", "year_model_v", "like", values.year_model_v);
-                cur_list.filter_area.filter_list.add_filter("Compatible with", "engine", "=", values.vehicle_engine);
-
+                if(values.vehicle_manufacturers) {
+                    console.log("in")
+                    cur_list.filter_area.filter_list.add_filter("Compatible with", "vehicle_manufacturers", "=", values.vehicle_manufacturers);
+                }
+                if (values.vehicle_model) {
+                    cur_list.filter_area.filter_list.add_filter("Compatible with", "vehicles_model", "=", values.vehicle_model);
+                }
+                if (values.year_model_v) {
+                    cur_list.filter_area.filter_list.add_filter("Compatible with", "year_model_v", "like", values.year_model_v);
+                }
+                if (values.vehicle_engine) {
+                    cur_list.filter_area.filter_list.add_filter("Compatible with", "engine", "=", values.vehicle_engine);
+                }
                 d.hide();
+                setTimeout(function() {
+                    cur_list.filter_area.refresh_list_view()
+                }, 200);
             }
             });
         d.show();
