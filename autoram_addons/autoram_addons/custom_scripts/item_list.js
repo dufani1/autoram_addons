@@ -32,13 +32,14 @@ frappe.listview_settings['Item'] = {
                 },
                 {
                     
-                    fieldname: 'column_break1',
-                    fieldtype: 'Column Break',
+                    fieldname: 'section_break1',
+                    fieldtype: 'Section Break',
                 },
                 {
                     label: frappe._('Model Year'),
                     fieldname: 'year_model_v',
-                    fieldtype: 'Data'                },
+                    fieldtype: 'Small Text'
+                },
                 {
                     
                     fieldname: 'column_break2',
@@ -47,7 +48,7 @@ frappe.listview_settings['Item'] = {
                 {
                     label: frappe._('Engine'),
                     fieldname: 'vehicle_engine',
-                    fieldtype: 'Data',
+                    fieldtype: 'Small Text',
                 },
             ],
             primary_action_label: frappe._('Set Filters'),
@@ -63,7 +64,7 @@ frappe.listview_settings['Item'] = {
                     cur_list.filter_area.filter_list.add_filter("Compatible with", "year_model_v", "like", values.year_model_v);
                 }
                 if (values.vehicle_engine) {
-                    cur_list.filter_area.filter_list.add_filter("Compatible with", "engine", "=", values.vehicle_engine);
+                    cur_list.filter_area.filter_list.add_filter("Compatible with", "engine", "like", values.vehicle_engine);
                 }
                 d.hide();
                 setTimeout(function() {
